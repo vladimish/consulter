@@ -14,10 +14,6 @@ public class ConfigureRabbitMQ {
     public static final String PRODUCER_AUTH_QUEUE_NAME = "consulter.auth.client";
     public static final String CONSUMER_AUTH_QUEUE_NAME = "consulter.auth.client.reply";
 
-    @Bean
-    Queue createProducerQueue() {
-        return new Queue(PRODUCER_AUTH_QUEUE_NAME, false);
-    }
 
     @Bean
     DirectExchange exchange() {
@@ -25,8 +21,8 @@ public class ConfigureRabbitMQ {
     }
 
     @Bean
-    Binding binding(@Qualifier("createProducerQueue") Queue q, DirectExchange e) {
-        return BindingBuilder.bind(q).to(e).with(PRODUCER_AUTH_QUEUE_NAME);
+    Binding binding(Queue q, DirectExchange e) {
+        return BindingBuilder.bind(q).to(e).with(CONSUMER_AUTH_QUEUE_NAME);
     }
 
     @Bean
