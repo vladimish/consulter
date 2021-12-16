@@ -2,6 +2,7 @@ package com.vladimish.consulter.gateway.rabbitmq.producer;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.vladimish.consulter.gateway.rabbitmq.ConfigureRabbitMQ;
 import com.vladimish.consulter.gateway.rabbitmq.holder.RegisterHolder;
 import com.vladimish.consulter.gateway.rabbitmq.models.RegisterReply;
@@ -31,6 +32,7 @@ public class SendMessageController {
     @PostMapping("/register")
     public String sendMessage(@RequestBody RegisterRequest r) {
         ObjectMapper objectMapper = new ObjectMapper();
+        objectMapper.setPropertyNamingStrategy(PropertyNamingStrategy.KEBAB_CASE);
         String str = null;
         try {
             str = objectMapper.writeValueAsString(r);

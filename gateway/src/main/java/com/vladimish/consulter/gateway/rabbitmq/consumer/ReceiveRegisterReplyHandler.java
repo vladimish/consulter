@@ -2,6 +2,7 @@ package com.vladimish.consulter.gateway.rabbitmq.consumer;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.datatype.jsr310.JSR310Module;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.vladimish.consulter.gateway.rabbitmq.ConfigureRabbitMQ;
@@ -19,6 +20,7 @@ public class ReceiveRegisterReplyHandler {
     public void handleRegisterReply(String messageBody) {
         ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.registerModule(new JavaTimeModule());
+        objectMapper.setPropertyNamingStrategy(PropertyNamingStrategy.KEBAB_CASE);
         RegisterReply reply = new RegisterReply();
         try {
             reply = objectMapper.readValue(messageBody, RegisterReply.class);

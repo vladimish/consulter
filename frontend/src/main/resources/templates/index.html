@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="index.css">
+    <link rel="stylesheet" href="header.css">
+</head>
+<body>
+<div class="header" th:fragment="header">
+    <div class="header-container">
+        <div class="left-header">
+            <img class="logo" src="logo.png" alt="Consulter">
+        </div>
+        <div class="right-header">
+            <a class="header-btn" th:href="@{/login}">Login</a>
+            <a class="header-btn" th:href="@{/signup}">Sign Up</a>
+        </div>
+    </div>
+</div>
+<div class="content">
+    <div class="content-container">
+        <img class="content-img" src="content-1.jpg" alt="Building image">
+        <div class="content-block">
+            <div class="text-container">
+                <div class="content-header">Consulting</div>
+                <div class="content-text">Consulting is really cool...<br>Please buy something.</div>
+            </div>
+            <a class="content-btn" th:href="@{/signup}">Sign Up</a>
+        </div>
+    </div>
+</div>
+<div class="footer">
+</div>
+</body>

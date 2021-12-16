@@ -1,0 +1,43 @@
+.logo {
+    margin-top: 10px;
+    height: 48px;
+}
+
+.header {
+    background: black;
+}
+
+.header-container {
+    min-height: 64px;
+    max-height: 64px;
+    max-width: 996px;
+    justify-content: space-between;
+    display: flex;
+    flex-direction: row;
+    height: 100%;
+    color: white;
+    margin: auto;
+}
+
+.right-header {
+    margin-top: auto;
+    margin-bottom: auto;
+    display: flex;
+    flex-direction: row;
+}
+
+.header-btn {
+    font-family: sans-serif;
+    color: black;
+    text-decoration: none;
+    padding: 12px;
+    background: white;
+    border-radius: 6px;
+    margin-left: 16px;
+}
+
+.header-btn:hover {
+    transition-duration: 0.3s;
+    color: white;
+    background: black;
+}

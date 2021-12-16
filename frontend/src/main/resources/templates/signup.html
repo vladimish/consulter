@@ -1,0 +1,32 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Getting Started: Serving Web Content</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link rel="stylesheet" href="signup.css">
+    <link rel="stylesheet" href="header.css">
+</head>
+<body>
+<div class="header" th:replace="index :: header"></div>
+<div class="content">
+    <div class="content-container">
+        <div class="form-container">
+            <form action="#" th:action="@{/signup}" th:object="${signup}" method="post">
+                <label for="FirstName">First name:</label><br>
+                <input type="text" id="FirstName" name="FirstName" th:field="*{FirstName}"><br>
+                <label for="LastName">Last name:</label><br>
+                <input type="text" id="LastName" name="LastName" th:field="*{LastName}"><br>
+                <label for="Email">E-mail:</label><br>
+                <input type="text" id="Email" name="Email" th:field="*{Email}"><br>
+                <label for="Password">Password:</label><br>
+                <input type="text" id="Password" name="Password" th:field="*{Password}"><br>
+                <label for="RepeatPassword">Repeat password:</label><br>
+                <input type="text" id="RepeatPassword" name="RepeatPassword" th:field="*{RepeatPassword}"><br><br>
+
+                <input class="form-btn" type="submit" value="Submit">
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>
