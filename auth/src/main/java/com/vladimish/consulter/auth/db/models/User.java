@@ -1,9 +1,29 @@
 package com.vladimish.consulter.auth.db.models;
 
+import com.fasterxml.jackson.annotation.JsonAlias;
+
 import javax.persistence.*;
 
 @Entity
 public class User {
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
+    private String firstName;
+    private String lastName;
+    private String email;
+    private String password;
+
+    public User(@JsonAlias("first-name") String firstName, @JsonAlias("last-name") String lastName, String email, String password) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.password = password;
+    }
+
+    public User() {
+
+    }
 
     public Long getId() {
         return id;
@@ -13,19 +33,21 @@ public class User {
         this.id = id;
     }
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
-
-    public String getName() {
-        return name;
+    public String getFirstName() {
+        return firstName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
     }
 
-    private String name;
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
 
     public String getEmail() {
         return email;
@@ -35,5 +57,11 @@ public class User {
         this.email = email;
     }
 
-    private String email;
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
 }

@@ -53,8 +53,11 @@ public class SendMessageController {
         while (RegisterHolder.getINSTANCE().list.stream().filter(o -> o.getId().equals(r.getId())).count() == 0 && t.isAfter(LocalDateTime.now())) {
         }
 
+        log.info("time or ok");
+
         if (!t.isAfter(LocalDateTime.now()) || RegisterHolder.getINSTANCE().list.stream().filter(o -> o.getId().equals(r.getId())).count() == 0) {
-            return "Timed out";
+            log.info("timeout");
+            throw new RuntimeException("Timed out");
         }
 
         return "Message sent: " + str;

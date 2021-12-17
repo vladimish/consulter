@@ -1,27 +1,47 @@
 package com.vladimish.consulter.auth.models;
 
+import com.fasterxml.jackson.annotation.JsonAlias;
+
 import java.util.Random;
 import java.util.UUID;
 
 public class RegisterRequest {
-    String name;
-    String email;
-    UUID id;
 
-    public RegisterRequest() {
-        this.id = new UUID(new Random().nextLong(), new Random().nextLong());
+    public RegisterRequest(){
+
     }
 
-    public String getName() {
-        return this.name;
+    public RegisterRequest(@JsonAlias("first-name") String firstName, @JsonAlias("last-name") String lastName, String email, String password, UUID id){
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.password = password;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
     }
 
     public String getEmail() {
-        return this.email;
+        return email;
     }
 
-    public UUID getId(){
-        return this.id;
+    public String getPassword() {
+        return password;
     }
+
+    public UUID getId() {
+        return id;
+    }
+
+    String firstName;
+    String lastName;
+    String email;
+    String password;
+    UUID id;
 
 }

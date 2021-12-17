@@ -6,12 +6,12 @@ import java.util.Random;
 import java.util.UUID;
 
 public class RegisterRequest {
-    public String getFirsName() {
-        return firsName;
+    public String getFirstName() {
+        return firstName;
     }
 
-    public void setFirsName(String firsName) {
-        this.firsName = firsName;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
     }
 
     public String getLastName() {
@@ -42,14 +42,14 @@ public class RegisterRequest {
         this.id = id;
     }
 
-    String firsName;
+    String firstName;
     String lastName;
     String email;
     String password;
     UUID id;
 
     public RegisterRequest(@JsonAlias("first-name") String firsName, @JsonAlias("last-name") String lastName, String password, String email) {
-        this.firsName = firsName;
+        this.firstName = firsName;
         this.lastName = lastName;
         this.email = email;
         this.password = password;

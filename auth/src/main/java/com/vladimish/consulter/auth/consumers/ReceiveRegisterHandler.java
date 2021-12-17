@@ -2,6 +2,7 @@ package com.vladimish.consulter.auth.consumers;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 
 import com.vladimish.consulter.auth.ConfigureRabbitMQ;
@@ -30,7 +31,8 @@ public class ReceiveRegisterHandler {
 
         ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.registerModule(new JavaTimeModule());
-        RegisterRequest request = new RegisterRequest();
+        objectMapper.setPropertyNamingStrategy(PropertyNamingStrategy.KEBAB_CASE);
+        RegisterRequest request = new RegisterRequest(null, null, null, null, null);
         try {
             request = objectMapper.readValue(messageBody, RegisterRequest.class);
         } catch (JsonProcessingException e) {
@@ -40,9 +42,7 @@ public class ReceiveRegisterHandler {
 
         var users = userRepository.findAllByEmail(request.getEmail());
         if (users.size() == 0) {
-            var newUser = new User();
-            newUser.setEmail(request.getEmail());
-            newUser.setName(request.getName());
+            var newUser = new User(request.getFirstName(), request.getLastName(), request.getEmail(), request.getPassword());
             userRepository.save(newUser);
         } else {
             log.info("User already exists");

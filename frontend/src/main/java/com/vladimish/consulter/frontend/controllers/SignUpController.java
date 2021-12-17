@@ -25,8 +25,7 @@ public class SignUpController {
         model.addAttribute("signup", signup);
         var res = signup.validate();
         if (res == null) {
-            SendSignUp.sendSignUp(signup);
-            return "index";
+            return SendSignUp.sendSignUp(signup);
         } else {
             return "signup";
         }
