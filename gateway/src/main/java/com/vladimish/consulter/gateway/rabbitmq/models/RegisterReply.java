@@ -4,15 +4,21 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 
 public class RegisterReply {
-    UUID id;
+    String id;
     String status;
     LocalDateTime time;
+
+    public String getConsumer() {
+        return consumer;
+    }
+
+    String consumer;
 
     public String getStatus() {
         return status;
     }
 
-    public UUID getId() {
+    public String getId() {
         return id;
     }
 

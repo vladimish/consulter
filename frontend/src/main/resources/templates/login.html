@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title><link rel="stylesheet" href="signup.css">
+    <link rel="stylesheet" href="header.css">
+</head>
+<body>
+<div class="header" th:replace="index :: header"></div>
+<div class="content">
+    <div class="content-container">
+        <div class="form-container">
+            <form action="#" th:action="@{/login}" th:object="${login}" method="post">
+                <label for="Email">E-mail:</label><br>
+                <input type="text" id="Email" name="Email" th:field="*{email}"><br>
+                <label for="Password">Password:</label><br>
+                <input type="text" id="Password" name="Password" th:field="*{password}"><br>
+                <input class="form-btn" type="submit" value="Submit">
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>

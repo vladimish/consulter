@@ -38,25 +38,35 @@ public class RegisterRequest {
         this.password = password;
     }
 
-    public void setId(UUID id) {
+    public void setId(String id) {
         this.id = id;
     }
 
+    public String getConsumer() {
+        return consumer;
+    }
+
+    public void setConsumer(String consumer) {
+        this.consumer = consumer;
+    }
+
+    String consumer;
     String firstName;
     String lastName;
     String email;
     String password;
-    UUID id;
+    String id;
 
     public RegisterRequest(@JsonAlias("first-name") String firsName, @JsonAlias("last-name") String lastName, String password, String email) {
         this.firstName = firsName;
         this.lastName = lastName;
         this.email = email;
         this.password = password;
-        this.id = new UUID(new Random().nextLong(), new Random().nextLong());
+        this.id = UUID.randomUUID().toString();
+        this.consumer = System.getenv("TOKEN");
     }
 
-    public UUID getId() {
+    public String getId() {
         return this.id;
     }
 

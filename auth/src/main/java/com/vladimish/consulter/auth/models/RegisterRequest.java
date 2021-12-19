@@ -34,14 +34,23 @@ public class RegisterRequest {
         return password;
     }
 
-    public UUID getId() {
+    public String getId() {
         return id;
     }
 
+    public String getConsumer() {
+        return consumer;
+    }
+
+    public void setConsumer(String consumer) {
+        this.consumer = consumer;
+    }
+
+    String consumer;
     String firstName;
     String lastName;
     String email;
     String password;
-    UUID id;
+    String id;
 
 }

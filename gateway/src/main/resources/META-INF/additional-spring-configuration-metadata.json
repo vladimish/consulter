@@ -1,0 +1,13 @@
+{
+  "properties": [
+    {
+      "name": "ConfigureRabbitMQ.CONSUMER_AUTH_QUEUE_NAME",
+      "type": "java.lang.String",
+      "description": "Description for ConfigureRabbitMQ.CONSUMER_AUTH_QUEUE_NAME."
+    },
+    {
+      "name": "ConfigureRabbitMQ.CONSUMER_LOGIN_QUEUE_NAME",
+      "type": "java.lang.String",
+      "description": "Description for ConfigureRabbitMQ.CONSUMER_LOGIN_QUEUE_NAME."
+    }
+  ] }

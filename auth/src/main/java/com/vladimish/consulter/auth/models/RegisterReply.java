@@ -5,9 +5,9 @@ import java.util.UUID;
 
 public class RegisterReply {
 
-    UUID id;
+    String id;
 
-    public void setId(UUID id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -27,11 +27,21 @@ public class RegisterReply {
         return status;
     }
 
-    public UUID getId() {
+    public String getId() {
         return id;
     }
 
     public LocalDateTime getTime() {
         return time;
     }
+
+    public String getConsumer() {
+        return consumer;
+    }
+
+    public void setConsumer(String consumer) {
+        this.consumer = consumer;
+    }
+
+    String consumer;
 }

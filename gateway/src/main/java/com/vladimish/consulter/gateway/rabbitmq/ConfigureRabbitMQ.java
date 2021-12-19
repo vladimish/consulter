@@ -1,10 +1,6 @@
 package com.vladimish.consulter.gateway.rabbitmq;
 
-import com.vladimish.consulter.gateway.rabbitmq.consumer.ReceiveRegisterReplyHandler;
 import org.springframework.amqp.core.*;
-import org.springframework.amqp.rabbit.connection.ConnectionFactory;
-import org.springframework.amqp.rabbit.listener.SimpleMessageListenerContainer;
-import org.springframework.amqp.rabbit.listener.adapter.MessageListenerAdapter;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -12,12 +8,14 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class ConfigureRabbitMQ {
     public static final String EXCHANGE_NAME = "consulter.exchange";
-    public static final String PRODUCER_AUTH_QUEUE_NAME = "consulter.auth.client";
-    public static final String CONSUMER_AUTH_QUEUE_NAME = "consulter.auth.client.reply";
+    public static final String PRODUCER_REGISTER_QUEUE_NAME = "consulter.auth.client.register";
+    public static final String CONSUMER_REGISTER_QUEUE_NAME = "consulter.auth.client.register." + System.getenv("TOKEN") + ".reply";
+    public static final String PRODUCER_LOGIN_QUEUE_NAME = "consulter.auth.client.login";
+    public static final String CONSUMER_LOGIN_QUEUE_NAME = "consulter.auth.client.login." + System.getenv("TOKEN") + ".reply";
 
     @Bean
-    Queue createProducerQueue() {
-        return new Queue(PRODUCER_AUTH_QUEUE_NAME, false);
+    Queue createProducerRegisterQueue() {
+        return new Queue(PRODUCER_REGISTER_QUEUE_NAME, false);
     }
 
     @Bean
@@ -26,13 +24,38 @@ public class ConfigureRabbitMQ {
     }
 
     @Bean
-    Binding binding(@Qualifier("createProducerQueue") Queue q, DirectExchange e) {
-        return BindingBuilder.bind(q).to(e).with(PRODUCER_AUTH_QUEUE_NAME);
+    Binding registerProducerBinding(@Qualifier("createProducerRegisterQueue") Queue q, DirectExchange e) {
+        return BindingBuilder.bind(q).to(e).with(PRODUCER_REGISTER_QUEUE_NAME);
     }
 
     @Bean
-    Queue createConsumerQueue() {
-        return new Queue(CONSUMER_AUTH_QUEUE_NAME, false);
+    Queue createRegisterConsumerQueue() {
+        return new Queue(CONSUMER_REGISTER_QUEUE_NAME, false);
+    }
+
+    @Bean
+    Binding registerConsumerBinding(@Qualifier("createRegisterConsumerQueue") Queue q, DirectExchange e) {
+        return BindingBuilder.bind(q).to(e).with(CONSUMER_REGISTER_QUEUE_NAME);
+    }
+
+    @Bean
+    Queue createProducerLoginQueue() {
+        return new Queue(PRODUCER_LOGIN_QUEUE_NAME, false);
+    }
+
+    @Bean
+    Binding loginProducerBinding(@Qualifier("createProducerLoginQueue") Queue q, DirectExchange e) {
+        return BindingBuilder.bind(q).to(e).with(PRODUCER_LOGIN_QUEUE_NAME);
+    }
+
+    @Bean
+    Queue createConsumerLoginQueue() {
+        return new Queue(CONSUMER_LOGIN_QUEUE_NAME, false);
+    }
+
+    @Bean
+    Binding loginConsumerBinding(@Qualifier("createConsumerLoginQueue") Queue q, DirectExchange e) {
+        return BindingBuilder.bind(q).to(e).with(CONSUMER_LOGIN_QUEUE_NAME);
     }
 
 }
