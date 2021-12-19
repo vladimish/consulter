@@ -5,6 +5,19 @@
     <title>Control panel</title>
 </head>
 <body>
-    Control panel.
+<table>
+    <thead>
+    <tr>
+        <th> Title </th>
+        <th> Author </th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="t : ${tts}">
+        <td><span th:text="${t.topic}"> Title </span></td>
+        <td><span th:text="${t.name}"> Author </span></td>
+    </tr>
+    </tbody>
+</table>
 </body>
 </html>

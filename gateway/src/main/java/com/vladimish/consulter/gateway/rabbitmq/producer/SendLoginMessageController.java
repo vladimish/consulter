@@ -51,11 +51,18 @@ public class SendLoginMessageController {
         }
 
         if (!t.isAfter(LocalDateTime.now()) || LoginHolder.getINSTANCE().list.stream().filter(o -> o.getId().equals(r.getId())).count() == 0) {
-            log.info("timeout");
             throw new RuntimeException("Timed out");
         }
 
-        return "Message sent: " + str;
+        var res = "";
+
+        try {
+            res = objectMapper.writeValueAsString(LoginHolder.getINSTANCE().list.stream().filter(o -> o.getId().equals(r.getId())).toList().get(0));
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+
+        return res;
     }
 
 }

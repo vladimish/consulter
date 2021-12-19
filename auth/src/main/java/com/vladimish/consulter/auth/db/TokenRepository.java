@@ -8,4 +8,5 @@ import java.util.List;
 
 public interface TokenRepository extends CrudRepository<Token, Long> {
     List<Token> findAllByEmail(String email);
+    List<Token> findAllByToken(String token);
 }

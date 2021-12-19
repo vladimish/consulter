@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import javax.servlet.http.HttpServletResponse;
+
 @Controller
 public class LoginController {
     @GetMapping("/login")
@@ -20,11 +22,11 @@ public class LoginController {
 
     // Handle form submission.
     @PostMapping("/login")
-    public String signupForm(@ModelAttribute LoginModel login, Model model) {
+    public String signupForm(@ModelAttribute LoginModel login, Model model, HttpServletResponse response) {
         model.addAttribute("login", login);
         var res = login.validate();
         if (res == null) {
-            return SendLogin.sendLogin(login);
+            return SendLogin.sendLogin(login, response);
         } else {
             return "login";
         }

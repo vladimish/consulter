@@ -11,6 +11,7 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.client.RestTemplate;
 
+import javax.servlet.http.HttpServletResponse;
 import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 
@@ -36,6 +37,7 @@ public class SendSignUp {
 
         ResponseEntity<String> resp = restTemplate.postForEntity(EnvConfig.gatewayURL + "/register", req, String.class);
         log.info(String.valueOf(resp.getStatusCode()));
+
         if (resp.getStatusCode() == HttpStatus.INTERNAL_SERVER_ERROR) {
             return "500";
         }
