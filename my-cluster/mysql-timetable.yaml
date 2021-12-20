@@ -1,0 +1,48 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: timetable-mysql-deployment
+  labels:
+    app: timetable-mysql
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: timetable-mysql
+  template:
+    metadata:
+      labels:
+        app: timetable-mysql
+    spec:
+      containers:
+      - name: mysql
+        image: mariadb:10.7
+        ports:
+        - containerPort: 3306
+        env:
+        - name: MARIADB_ROOT_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: timetable-mysql-secret
+              key: timetable-mysql-password
+        - name: MARIADB_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: timetable-mysql-secret
+              key: timetable-mysql-password
+        - name: MARIADB_DATABASE
+          value: timetable
+        - name: MARIADB_USER
+          value: timetable
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: timetable-mysql-service
+spec:
+  selector:
+    app: timetable-mysql
+  ports:
+    - protocol: TCP 
+      port: 3306
+      targetPort: 3306

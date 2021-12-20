@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: timetable-deployment
+  labels:
+    app: timetable
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: timetable
+  template:
+    metadata:
+      labels:
+        app: timetable
+    spec:
+      containers:
+      - name: timetable
+        image: vladimish/timetable:0.1
+        env:
+        - name: RABBITMQ_URL
+          valueFrom:
+            configMapKeyRef:
+              name: rabbitmq-config
+              key: rabbitmq-url
+        - name: DB_URL
+          valueFrom:
+            configMapKeyRef:
+              name: timetable-mysql-config
+              key: timetable-mysql-url
+        - name: MARIADB_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: timetable-mysql-secret
+              key: timetable-mysql-password
+        - name: MARIADB_USER
+          value: timetable

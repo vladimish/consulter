@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: frontend-deployment
+  labels:
+    app: frontend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: frontend
+  template:
+    metadata:
+      labels:
+        app: frontend
+    spec:
+      containers:
+      - name: frontend
+        image: vladimish/frontend:0.1
+        env:
+        - name: GATEWAY_URL
+          valueFrom:
+            configMapKeyRef:
+              name: gateway-config
+              key: gateway-url
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: auth-service
+spec:
+  selector:
+    app: auth
+  ports:
+    - protocol: TCP 
+      port: 5672
+      targetPort: 5672
+spec:
+  selector:
+    app: auth
