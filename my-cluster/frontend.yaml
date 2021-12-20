@@ -17,24 +17,22 @@ spec:
       containers:
       - name: frontend
         image: vladimish/frontend:0.1
+        ports:
+        - containerPort: 8080
         env:
         - name: GATEWAY_URL
-          valueFrom:
-            configMapKeyRef:
-              name: gateway-config
-              key: gateway-url
+          value: gateway-service.default.svc.cluster.local
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: auth-service
+  name: frontend-service
 spec:
+  type: NodePort
   selector:
-    app: auth
+    app: frontend
   ports:
     - protocol: TCP 
-      port: 5672
-      targetPort: 5672
-spec:
-  selector:
-    app: auth
+      port: 8080
+      targetPort: 8080
+      nodePort: 30002

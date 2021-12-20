@@ -26,10 +26,7 @@ spec:
               name: timetable-mysql-secret
               key: timetable-mysql-password
         - name: MARIADB_PASSWORD
-          valueFrom:
-            secretKeyRef:
-              name: timetable-mysql-secret
-              key: timetable-mysql-password
+          value: timetable
         - name: MARIADB_DATABASE
           value: timetable
         - name: MARIADB_USER

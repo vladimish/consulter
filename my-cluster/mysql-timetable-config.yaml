@@ -3,4 +3,4 @@ kind: ConfigMap
 metadata:
   name: timetable-mysql-config
 data:
-  mysql-url: timetable-mysql-service
+  timetable-mysql-url: timetable-mysql-service

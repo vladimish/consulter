@@ -26,10 +26,7 @@ spec:
               name: mysql-secret
               key: mysql-password
         - name: MARIADB_PASSWORD
-          valueFrom:
-            secretKeyRef:
-              name: mysql-secret
-              key: mysql-password
+          value: auth
         - name: MARIADB_DATABASE
           value: auth
         - name: MARIADB_USER
