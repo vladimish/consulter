@@ -15,6 +15,7 @@ import com.vladimish.consulter.auth.models.LoginRequest;
 import com.vladimish.consulter.auth.producers.SendCheckReply;
 import com.vladimish.consulter.auth.producers.SendLoginReply;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.amqp.AmqpRejectAndDontRequeueException;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -49,7 +50,12 @@ public class ReceiveCheckHandler {
         reply.setConsumer(request.getConsumer());
 
         var userEmials = tokenRepository.findAllByToken(request.getToken());
-        var email = userEmials.get(0).getEmail();
+        var email = "";
+        if (userEmials.size() > 0) {
+            email = userEmials.get(0).getEmail();
+        } else {
+            throw new AmqpRejectAndDontRequeueException("Email not found");
+        }
 
         var users = userRepository.findAllByEmail(email);
         if (users.size() > 0) {

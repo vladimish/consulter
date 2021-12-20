@@ -41,4 +41,24 @@ public class AddRecordRequest {
     public void setConsumer(String consumer) {
         this.consumer = consumer;
     }
+
+    public String getTopic() {
+        return topic;
+    }
+
+    public void setTopic(String topic) {
+        this.topic = topic;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    String topic;
+
+    String id;
 }

@@ -46,7 +46,9 @@ public class SendLogin {
             e.printStackTrace();
         }
 
-        response.addCookie(new Cookie("auth", res.getToken()));
+        var cookie = new Cookie("auth", res.getToken());
+        cookie.setMaxAge(604800);
+        response.addCookie(cookie);
 
         if (resp.getStatusCode() == HttpStatus.INTERNAL_SERVER_ERROR) {
             return "500";

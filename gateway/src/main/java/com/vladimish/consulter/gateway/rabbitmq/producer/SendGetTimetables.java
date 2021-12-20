@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.time.LocalDateTime;
+import java.util.ConcurrentModificationException;
 import java.util.UUID;
 
 @Slf4j
@@ -58,7 +59,15 @@ public class SendGetTimetables {
 
         log.info(LocalDateTime.now().toString());
 
-        while (CheckHolder.getINSTANCE().list.stream().filter(o -> o.getId().equals(r.getId())).count() == 0 && t.isAfter(LocalDateTime.now())) {
+        var ow = true;
+        while (ow) {
+            try {
+                while (CheckHolder.getINSTANCE().list.stream().filter(o -> o.getId().equals(r.getId())).count() == 0 && t.isAfter(LocalDateTime.now())) {
+                    ow = false;
+                }
+            } catch (ConcurrentModificationException e) {
+
+            }
         }
 
         if (!t.isAfter(LocalDateTime.now()) || CheckHolder.getINSTANCE().list.stream().filter(o -> o.getId().equals(r.getId())).count() == 0) {
@@ -95,7 +104,15 @@ public class SendGetTimetables {
 
         t = LocalDateTime.now().plusSeconds(20);
 
-        while (GetTimetablesHolder.getINSTANCE().list.stream().filter(o -> o.getId().equals(r.getId())).count() == 0 && t.isAfter(LocalDateTime.now())) {
+        ow = true;
+        while (ow) {
+            try {
+                while (GetTimetablesHolder.getINSTANCE().list.stream().filter(o -> o.getId().equals(r.getId())).count() == 0 && t.isAfter(LocalDateTime.now())) {
+                    ow = false;
+                }
+            } catch (ConcurrentModificationException e) {
+
+            }
         }
 
         if (!t.isAfter(LocalDateTime.now()) || GetTimetablesHolder.getINSTANCE().list.stream().filter(o -> o.getId().equals(r.getId())).count() == 0) {

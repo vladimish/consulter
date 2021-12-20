@@ -16,8 +16,15 @@
             <img class="logo" src="logo.png" alt="Consulter">
         </div>
         <div class="right-header">
-            <a class="header-btn" th:href="@{/login}">Login</a>
-            <a class="header-btn" th:href="@{/signup}">Sign Up</a>
+            <div style="display: flex" th:if="${username != null}">
+                <div style="margin-top: auto; margin-bottom: auto" th:text="${username?.toString()}"></div>
+                <a class="header-btn" th:href="@{/user_panel}">Timetable</a>
+                <a class="header-btn" th:href="@{/logout}">Logout</a>
+            </div>
+            <div th:if="${username == null}">
+                <a class="header-btn" th:href="@{/login}">Login</a>
+                <a class="header-btn" th:href="@{/signup}">Sign Up</a>
+            </div>
         </div>
     </div>
 </div>

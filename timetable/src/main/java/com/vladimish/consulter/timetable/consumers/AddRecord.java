@@ -28,6 +28,8 @@ public class AddRecord {
         objectMapper.registerModule(new JavaTimeModule());
         objectMapper.setPropertyNamingStrategy(PropertyNamingStrategy.KEBAB_CASE);
 
+        log.info("Handling: " + messageBody);
+
         AddRecordRequest req = new AddRecordRequest();
         try {
             req = objectMapper.readValue(messageBody, AddRecordRequest.class);
@@ -35,7 +37,7 @@ public class AddRecord {
             e.printStackTrace();
         }
 
-        Record rec = new Record(req.getClient(), req.getEmployee(), req.getStart());
+        Record rec = new Record(req.getClient(), req.getEmployee(), req.getStart(), req.getTopic());
 
         recordRepository.save(rec);
 

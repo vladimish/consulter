@@ -22,6 +22,7 @@ public class ConfigureRabbitMQ {
     public static final String CONSUMER_TIMETABLE_GET_QUEUE_NAME = "consulter.timetable.records.get." + System.getenv("TOKEN") + ".reply";
 
 
+
     @Bean
     Queue createProducerRegisterQueue() {
         return new Queue(PRODUCER_REGISTER_QUEUE_NAME, false);

@@ -1,23 +1,44 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:HH="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <title>Control panel</title>
+    <link rel="stylesheet" href="header.css">
+    <link rel="stylesheet" href="user_panel.css">
 </head>
 <body>
-<table>
-    <thead>
-    <tr>
-        <th> Title </th>
-        <th> Author </th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr th:each="t : ${tts}">
-        <td><span th:text="${t.topic}"> Title </span></td>
-        <td><span th:text="${t.name}"> Author </span></td>
-    </tr>
-    </tbody>
-</table>
+<div class="header" th:replace="index :: header"></div>
+<div class="table-container">
+    <div class="heading">
+        Your timetable:
+    </div>
+    <table>
+        <thead>
+        <tr>
+            <th> Topic</th>
+            <th> Client</th>
+            <th> Employee</th>
+            <th> Time</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="t : ${tts}">
+            <td><span th:text="${t.topic}"> Topic </span></td>
+            <td><span th:text="${t.client}"> Client </span></td>
+            <td><span th:text="${t.employee}"> Employee </span></td>
+            <td><span th:text="${#temporals.format(t.start, 'dd-MM-yyyy HH:mm')}"> Time </span></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<div class="form-container">
+    <form action="#" th:action="@{/add_record}" th:object="${record}" method="post">
+        <label for="Topic">Topic:</label><br>
+        <input type="text" id="Topic" name="Topic" th:field="*{topic}"><br>
+        <label for="Start">Start time:</label><br>
+        <input type="datetime-local" id="Start" name="Start" th:field="*{start}"><br>
+        <input class="form-btn" type="submit" value="Submit">
+    </form>
+</div>
 </body>
 </html>

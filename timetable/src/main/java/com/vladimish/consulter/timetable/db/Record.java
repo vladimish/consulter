@@ -57,10 +57,11 @@ public class Record {
     String employee;
     LocalDateTime start;
 
-    public Record(String client, String employee, LocalDateTime start) {
+    public Record(String client, String employee, LocalDateTime start, String topic) {
         this.client = client;
         this.employee = employee;
         this.start = start;
+        this.topic = topic;
     }
 
     public Record() {
