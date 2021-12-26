@@ -35,7 +35,7 @@ public class SendLogin {
 
         log.info(new String(str, StandardCharsets.UTF_8));
 
-        ResponseEntity<String> resp = restTemplate.postForEntity(EnvConfig.gatewayURL + "/login", req, String.class);
+        ResponseEntity<String> resp = restTemplate.postForEntity("http://" + EnvConfig.gatewayURL + "/login", req, String.class);
         log.info(String.valueOf(resp.getStatusCode()));
 
         log.info(resp.getBody());
@@ -46,9 +46,13 @@ public class SendLogin {
             e.printStackTrace();
         }
 
-        var cookie = new Cookie("auth", res.getToken());
-        cookie.setMaxAge(604800);
-        response.addCookie(cookie);
+        var authCookie = new Cookie("auth", res.getToken());
+        authCookie.setMaxAge(604800);
+        response.addCookie(authCookie);
+
+        var privilegesCookie = new Cookie("privileges", res.getPrivileges());
+        privilegesCookie.setMaxAge(604800);
+        response.addCookie(privilegesCookie);
 
         if (resp.getStatusCode() == HttpStatus.INTERNAL_SERVER_ERROR) {
             return "500";

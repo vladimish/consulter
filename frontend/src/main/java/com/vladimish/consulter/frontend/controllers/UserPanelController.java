@@ -42,7 +42,7 @@ public class UserPanelController {
                 HttpHeaders headers = new HttpHeaders();
                 headers.setContentType(MediaType.APPLICATION_JSON);
                 HttpEntity<byte[]> req = new HttpEntity<byte[]>("{}".getBytes(), headers);
-                ResponseEntity<String> resp = restTemplate.postForEntity(EnvConfig.gatewayURL + "/check?token=" + cookies[i].getValue(), req, String.class);
+                ResponseEntity<String> resp = restTemplate.postForEntity("http://" + EnvConfig.gatewayURL + "/check?token=" + cookies[i].getValue(), req, String.class);
 
                 ObjectMapper objectMapper = new ObjectMapper();
                 objectMapper.setPropertyNamingStrategy(PropertyNamingStrategy.KEBAB_CASE);

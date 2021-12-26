@@ -42,4 +42,14 @@ public class LoginReply {
 
     String consumer;
 
+    public String getPrivileges() {
+        return privileges;
+    }
+
+    public void setPrivileges(String privilege) {
+        this.privileges = privilege;
+    }
+
+    String privileges;
+
 }

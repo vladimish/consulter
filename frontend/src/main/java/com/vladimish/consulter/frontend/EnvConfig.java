@@ -7,9 +7,9 @@ public class EnvConfig {
     public static String gatewayURL;
 
     public static void Load(){
-        gatewayURL = "http://" + System.getenv("GATEWAY_SERVICE_SERVICE_HOST") + ":" + System.getenv("GATEWAY_SERVICE_SERVICE_PORT");
+        gatewayURL = System.getenv("GATEWAY_SERVICE_SERVICE_HOST");
         if (gatewayURL == null){
-            log.error("Variable GATEWAY_SERVICE_PORT isn't set.");
+            log.error("Variable GATEWAY_SERVICE_SERVICE_HOST isn't set.");
         }
     }
 }

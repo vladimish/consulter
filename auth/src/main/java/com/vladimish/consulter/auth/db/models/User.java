@@ -14,6 +14,16 @@ public class User {
     private String email;
     private String password;
 
+    public String getPrivileges() {
+        return privileges;
+    }
+
+    public void setPrivileges(String privileges) {
+        this.privileges = privileges;
+    }
+
+    private String privileges;
+
     public User(@JsonAlias("first-name") String firstName, @JsonAlias("last-name") String lastName, String email, String password) {
         this.firstName = firstName;
         this.lastName = lastName;

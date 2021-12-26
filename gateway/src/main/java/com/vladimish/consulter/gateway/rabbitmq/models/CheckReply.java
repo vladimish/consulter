@@ -38,4 +38,14 @@ public class CheckReply {
     String email;
     String consumer;
     String name;
+
+    public String getPrivileges() {
+        return privileges;
+    }
+
+    public void setPrivileges(String privileges) {
+        this.privileges = privileges;
+    }
+
+    String privileges;
 }

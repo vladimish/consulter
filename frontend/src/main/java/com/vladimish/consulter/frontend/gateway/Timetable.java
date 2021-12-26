@@ -23,7 +23,7 @@ public class Timetable {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
         HttpEntity<String> req = new HttpEntity<>("{\"type\":\"" + type + "\",\"token\":\"" + token + "\",\"id\":\"" + UUID.randomUUID().toString() + "\"}", headers);
-        ResponseEntity<String> resp = restTemplate.postForEntity(EnvConfig.gatewayURL + "/get_timetables", req, String.class);
+        ResponseEntity<String> resp = restTemplate.postForEntity("http://" + EnvConfig.gatewayURL + "/get_timetables", req, String.class);
         ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.registerModule(new JavaTimeModule());
         objectMapper.setPropertyNamingStrategy(PropertyNamingStrategy.KEBAB_CASE);

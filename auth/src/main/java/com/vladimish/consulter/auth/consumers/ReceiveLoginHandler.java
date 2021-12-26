@@ -56,6 +56,7 @@ public class ReceiveLoginHandler {
                 reply.setStatus("OK");
                 var token = UUID.randomUUID().toString();
                 reply.setToken(token);
+                reply.setPrivileges(users.get(0).getPrivileges());
                 Token t = new Token(request.getEmail(), token, LocalDateTime.now().minusWeeks(1));
                 tokenRepository.save(t);
             } else {

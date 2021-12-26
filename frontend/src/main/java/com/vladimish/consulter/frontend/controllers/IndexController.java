@@ -24,26 +24,33 @@ public class IndexController {
     @GetMapping("/")
     public String signup(Model model, HttpServletRequest request) {
         var cookies = request.getCookies();
-        for (int i = 0; i < cookies.length; i++) {
-            if (cookies[i].getName().equals("auth")) {
-                if (cookies[i].getValue() == null || cookies[i].getValue() == "") {
-                    break;
-                }
-                var restTemplate = new RestTemplate();
+        if (cookies != null) {
+            for (int i = 0; i < cookies.length; i++) {
+                if (cookies[i].getName().equals("auth")) {
+                    if (cookies[i].getValue() == null || cookies[i].getValue() == "") {
+                        break;
+                    }
+                    var restTemplate = new RestTemplate();
 
-                HttpHeaders headers = new HttpHeaders();
-                headers.setContentType(MediaType.APPLICATION_JSON);
-                HttpEntity<byte[]> req = new HttpEntity<byte[]>("{}".getBytes(), headers);
-                ResponseEntity<String> resp = restTemplate.postForEntity(EnvConfig.gatewayURL + "/check?token=" + cookies[i].getValue(), req, String.class);
+                    HttpHeaders headers = new HttpHeaders();
+                    headers.setContentType(MediaType.APPLICATION_JSON);
+                    HttpEntity<byte[]> req = new HttpEntity<byte[]>("{}".getBytes(), headers);
+                    try {
+                        ResponseEntity<String> resp = restTemplate.postForEntity("http://" + EnvConfig.gatewayURL + "/check?token=" + cookies[i].getValue(), req, String.class);
 
-                ObjectMapper objectMapper = new ObjectMapper();
-                objectMapper.setPropertyNamingStrategy(PropertyNamingStrategy.KEBAB_CASE);
+                        ObjectMapper objectMapper = new ObjectMapper();
+                        objectMapper.setPropertyNamingStrategy(PropertyNamingStrategy.KEBAB_CASE);
 
-                try {
-                    var v = objectMapper.readValue(resp.getBody(), CheckResponse.class);
-                    model.addAttribute("username", v.getName());
-                } catch (JsonProcessingException e) {
-                    e.printStackTrace();
+                        try {
+                            var v = objectMapper.readValue(resp.getBody(), CheckResponse.class);
+                            model.addAttribute("username", v.getName());
+                            model.addAttribute("privileges", v.getPrivileges());
+                        } catch (JsonProcessingException e) {
+                            e.printStackTrace();
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                 }
             }
         }

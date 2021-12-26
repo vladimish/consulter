@@ -33,8 +33,17 @@ public class CheckReply {
         this.email = email;
     }
 
+    public void setPrivileges(String privileges) {
+        this.privileges = privileges;
+    }
+
+    public String getPrivileges() {
+        return this.privileges;
+    }
+
     String id;
     String consumer;
     String name;
     String email;
+    String privileges;
 }

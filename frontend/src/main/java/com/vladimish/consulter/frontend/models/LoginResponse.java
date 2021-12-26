@@ -23,4 +23,14 @@ public class LoginResponse {
     }
 
     String status;
+
+    public String getPrivileges() {
+        return privileges;
+    }
+
+    public void setPrivileges(String privileges) {
+        this.privileges = privileges;
+    }
+
+    String privileges;
 }
