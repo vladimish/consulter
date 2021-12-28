@@ -21,7 +21,8 @@ public class ConfigureRabbitMQ {
     public static final String PRODUCER_TIMETABLE_GET_QUEUE_NAME = "consulter.timetable.records.get";
     public static final String CONSUMER_TIMETABLE_GET_QUEUE_NAME = "consulter.timetable.records.get." + System.getenv("TOKEN") + ".reply";
 
-
+    public static final String PRODUCER_TIMETABLE_EDIT_QUEUE_NAME = "consulter.timetable.records.edit";
+    public static final String CONSUMER_TIMETABLE_EDIT_QUEUE_NAME = "consulter.timetable.records.edit." + System.getenv("TOKEN") + ".reply";
 
     @Bean
     Queue createProducerRegisterQueue() {
@@ -128,4 +129,23 @@ public class ConfigureRabbitMQ {
         return BindingBuilder.bind(q).to(e).with(CONSUMER_CHECK_QUEUE_NAME);
     }
 
+    @Bean
+    Queue createProducerTimetableEditQueue() {
+        return new Queue(PRODUCER_TIMETABLE_EDIT_QUEUE_NAME, false);
+    }
+
+    @Bean
+    Binding editTimetableBinding(@Qualifier("createProducerTimetableEditQueue") Queue q, DirectExchange e) {
+        return BindingBuilder.bind(q).to(e).with(PRODUCER_TIMETABLE_EDIT_QUEUE_NAME);
+    }
+
+    @Bean
+    Queue createConsumerTimetableEditQueue() {
+        return new Queue(CONSUMER_TIMETABLE_EDIT_QUEUE_NAME, false);
+    }
+
+    @Bean
+    Binding createConsumerEditTimetableBinding(@Qualifier("createConsumerTimetableEditQueue") Queue q, DirectExchange e) {
+        return BindingBuilder.bind(q).to(e).with(CONSUMER_TIMETABLE_EDIT_QUEUE_NAME);
+    }
 }

@@ -65,3 +65,20 @@ th, td {
     background: black;
     border-radius: 12px;
 }
+
+.content-btn {
+    text-align: center;
+    font-family: sans-serif;
+    color: white;
+    text-decoration: none;
+    padding: 12px;
+    background: black;
+    border-radius: 6px;
+    margin-left: 16px;
+}
+
+.content-btn:hover {
+    transition-duration: 0.3s;
+    color: black;
+    background: white;
+}

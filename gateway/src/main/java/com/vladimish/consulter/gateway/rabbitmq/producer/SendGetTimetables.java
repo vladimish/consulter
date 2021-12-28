@@ -89,6 +89,12 @@ public class SendGetTimetables {
         req2.setEmail(c.getEmail());
         req2.setType(r.getType());
 
+        if (c.getPrivileges() != null) {
+            if (c.getPrivileges().equals("admin")) {
+                req2.setType("admin");
+            }
+        }
+
         var str2 = "";
 
         try {

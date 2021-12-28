@@ -11,8 +11,10 @@ import javax.servlet.http.HttpServletResponse;
 public class LogoutController {
     @GetMapping("/logout")
     public String resetAuth(HttpServletResponse response) {
-        Cookie cookie = new Cookie("auth", null);
-        response.addCookie(cookie);
+        Cookie cookie1 = new Cookie("auth", null);
+        response.addCookie(cookie1);
+        Cookie cookie2 = new Cookie("privileges", null);
+        response.addCookie(cookie2);
         return "redirect:/";
     }
 }

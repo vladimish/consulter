@@ -25,7 +25,15 @@
         <tr th:each="t : ${tts}">
             <td><span th:text="${t.topic}"> Topic </span></td>
             <td><span th:text="${t.client}"> Client </span></td>
-            <td><span th:text="${t.employee}"> Employee </span></td>
+            <td th:switch="${privileges}">
+                <span th:case="'admin'">
+                    <form th:if="${t.employee==''}" th:action="@{/enroll}" method="post">
+                        <button class="content-btn" name="client" th:value="${t.client}">Enroll</button>
+                    </form>
+                    <span th:unless="${t.employee==''}" th:text="${t.employee}"> Employee </span>
+                </span>
+                <span th:case="*" th:text="${t.employee}"> Employee </span>
+            </td>
             <td><span th:text="${#temporals.format(t.start, 'dd-MM-yyyy HH:mm')}"> Time </span></td>
         </tr>
         </tbody>

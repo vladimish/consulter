@@ -5,7 +5,7 @@ metadata:
   labels:
     app: frontend
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       app: frontend
@@ -28,7 +28,7 @@ kind: Service
 metadata:
   name: frontend-service
 spec:
-  type: LoadBalancer
+  type: NodePort
   selector:
     app: frontend
   ports:

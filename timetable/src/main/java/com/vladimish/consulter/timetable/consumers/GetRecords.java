@@ -39,12 +39,14 @@ public class GetRecords {
             e.printStackTrace();
         }
 
+        log.info(messageBody);
+
         List<Record> recs = new ArrayList<Record>();
 
         if (req.getType().equals("client")) {
             recs = recordRepository.findAllByClient(req.getEmail());
         } else {
-            recs = recordRepository.findAllByEmployee(req.getEmail());
+            recs = (List<Record>) recordRepository.findAll();
         }
 
         GetRecordsResponse response = new GetRecordsResponse();

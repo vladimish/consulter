@@ -62,6 +62,7 @@ public class ReceiveCheckHandler {
             reply.setName(users.get(0).getFirstName() + " " + users.get(0).getLastName());
             var token = UUID.randomUUID().toString();
             reply.setEmail(email);
+            reply.setPrivileges(users.get(0).getPrivileges());
         } else {
             throw new RuntimeException("User not found");
         }

@@ -17,6 +17,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
@@ -29,7 +30,7 @@ import java.time.format.DateTimeFormatter;
 @Log4j2
 public class UserPanelController {
     @GetMapping("/user_panel")
-    public String handleUserPanel(@CookieValue("auth") String token, Model model, HttpServletRequest request) {
+    public String handleUserPanel(@CookieValue("auth") String token, @CookieValue("privileges") String privileges, Model model, HttpServletRequest request) {
         var tts = Timetable.getAllTimetables(token, "client");
         model.addAttribute("tts", tts);
         model.addAttribute("record", new RecordForm());
@@ -53,10 +54,32 @@ public class UserPanelController {
                 } catch (JsonProcessingException e) {
                     e.printStackTrace();
                 }
+            } else if (cookies[i].getName().equals("privileges")) {
+                model.addAttribute("privileges", cookies[i].getValue());
             }
         }
 
         return "user_panel";
+    }
+
+    class EnrollRequest {
+        public String client;
+    }
+
+    @RequestMapping(value = "/enroll", method = RequestMethod.POST, consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+    public String handleEnroll(@RequestBody MultiValueMap<String, String> enroll, @CookieValue("auth") String token) {
+        log.info(enroll.getFirst("client"));
+        log.info(token);
+
+        var json = String.format("{\"client\":\"%s\",\"employee\":\"%s\"}", enroll.getFirst("client"), token);
+        var restTemplate = new RestTemplate();
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        HttpEntity<byte[]> req = new HttpEntity<byte[]>(json.getBytes(), headers);
+        ResponseEntity<String> resp = restTemplate.postForEntity("http://" + EnvConfig.gatewayURL + "/edit_timetable", req, String.class);
+        log.info(resp.getBody());
+
+        return "redirect:/user_panel";
     }
 
     @PostMapping(value = "/add_record")
@@ -69,7 +92,7 @@ public class UserPanelController {
                 HttpHeaders headers = new HttpHeaders();
                 headers.setContentType(MediaType.APPLICATION_JSON);
                 HttpEntity<byte[]> req = new HttpEntity<byte[]>("{}".getBytes(), headers);
-                ResponseEntity<String> resp = restTemplate.postForEntity(EnvConfig.gatewayURL + "/check?token=" + cookies[i].getValue(), req, String.class);
+                ResponseEntity<String> resp = restTemplate.postForEntity("http://" + EnvConfig.gatewayURL + "/check?token=" + cookies[i].getValue(), req, String.class);
 
                 ObjectMapper objectMapper = new ObjectMapper();
                 objectMapper.setPropertyNamingStrategy(PropertyNamingStrategy.KEBAB_CASE);
@@ -87,7 +110,7 @@ public class UserPanelController {
                     headers2.setContentType(MediaType.APPLICATION_JSON);
                     var str = objectMapper.writeValueAsString(record);
                     HttpEntity<byte[]> req2 = new HttpEntity<byte[]>(str.getBytes(), headers2);
-                    ResponseEntity<String> resp2 = restTemplate.postForEntity(EnvConfig.gatewayURL + "/add_timetable", req2, String.class);
+                    ResponseEntity<String> resp2 = restTemplate.postForEntity("http://" + EnvConfig.gatewayURL + "/add_timetable", req2, String.class);
                 } catch (JsonProcessingException e) {
                     e.printStackTrace();
                 }

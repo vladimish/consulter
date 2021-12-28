@@ -35,7 +35,7 @@ public class SendSignUp {
 
         log.info(new String(str, StandardCharsets.UTF_8));
 
-        ResponseEntity<String> resp = restTemplate.postForEntity(EnvConfig.gatewayURL + "/register", req, String.class);
+        ResponseEntity<String> resp = restTemplate.postForEntity("http://" + EnvConfig.gatewayURL + "/register", req, String.class);
         log.info(String.valueOf(resp.getStatusCode()));
 
         if (resp.getStatusCode() == HttpStatus.INTERNAL_SERVER_ERROR) {
